@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using GameMain;
+using TMPro;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
@@ -101,11 +102,11 @@ namespace Autobind.Editor
             { "m_ggroup", "GridLayoutGroup" },
 
             { "m_btn", "Button" },
-            { "m_pressingbtn", "PressingButton" },
             { "m_uiBtn", "UIButton" },
             { "m_img", "Image" },
             { "m_rawimg", "RawImage" },
             { "m_txt", "Text" },
+            {"m_tmp_","TextMeshProUGUI"},
 
             { "m_input", "InputField" },
             { "m_selfinput", "SelfInputField" },
@@ -116,31 +117,12 @@ namespace Autobind.Editor
             { "m_scrollbar", "Scrollbar" },
             { "m_scrollrect", "ScrollRect" },
             { "m_drop", "Dropdown" },
-            { "m_event", "EventTrigger" },
-            { "m_NonDraw", "NonDrawingGraphic" },
             { "m_Progress", "ProgressBar" },
-            { "m_HLoopScroll", "LoopHorizontalScrollRect" },
-            { "m_VLoopScroll", "LoopVerticalScrollRect" },
-            { "m_sfimg", "SlicedFilledImage" },
-            { "m_roundRect", "RoundRect" },
-            // {"m_remoteimg","RemoteImage"},
-            { "m_loopScrollRect", "LoopScrollRect" },
-            { "m_recycleView", "RecycleView" },
-            { "m_tgroup", "ToggleGroup" },
-            { "m_pageview", "PageView" },
-            { "m_uiDrag", "UIDrag" },
-            { "m_textPro", "TextPro" },
-            { "m_camera", "Camera" },
-            { "m_remoteimg", "RemoteRawImage" },
-            { "m_slideBtn", "SlideTouchButton" },
-            { "m_hyperlink", "HyperlinkText" },
-            { "m_selectimg", "ImageSelectable" },
-            { "m_svga", "SnakeSvgaPlayer" },
-            { "m_item", "HotfixUGuiItem" }
         };
 
         private void OnEnable()
         {
+            
             m_BindDatas = serializedObject.FindProperty("BindDatas");
             m_BindComs = serializedObject.FindProperty("m_BindComs");
             expandRules = EditorPrefs.GetBool("COM_AUTO_BIND_TOOL_EXPAND", true);
