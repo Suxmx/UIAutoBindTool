@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using GameMain;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,7 +14,7 @@ namespace Autobind.Editor
     /// <summary>
     /// 实体与界面代码生成器
     /// </summary>
-    public class UIFormCodeGenerator : EditorWindow
+    public class AutobindToolConfigWindow : EditorWindow
     {
         public enum GenCodeType
         {
@@ -31,12 +30,13 @@ namespace Autobind.Editor
         private string UINamespace;
 
 
-        [MenuItem("Tools/UI自动绑定代码生成器")]
+        [MenuItem("Tools/UI自动绑定路径设置")]
         public static void OpenCodeGeneratorWindow()
         {
-            UIFormCodeGenerator window = GetWindowWithRect<UIFormCodeGenerator>(new Rect(500,500,500,150), true);
+            AutobindToolConfigWindow window =
+                GetWindowWithRect<AutobindToolConfigWindow>(new Rect(500, 500, 500, 150), true);
             window.minSize = new Vector2(500, 100);
-            window.titleContent =new GUIContent( "UI自动绑定路径设置");
+            window.titleContent = new GUIContent("UI自动绑定路径设置");
         }
 
         private void OnEnable()
@@ -57,7 +57,7 @@ namespace Autobind.Editor
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("自动生成的代码类型：", GUILayout.Width(140f));
 
-            
+
             EditorGUILayout.LabelField(UIFormCodePath);
             if (GUILayout.Button("选择"))
             {
@@ -65,7 +65,7 @@ namespace Autobind.Editor
             }
 
             EditorGUILayout.EndHorizontal();
-            
+
             EditorGUILayout.LabelField("UIItem");
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("自动生成的代码路径：", GUILayout.Width(140f));
@@ -73,6 +73,17 @@ namespace Autobind.Editor
             if (GUILayout.Button("选择"))
             {
                 ChooseItemAddress();
+            }
+
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("命名空间：", GUILayout.Width(140f));
+            EditorGUI.BeginChangeCheck();
+            UINamespace = EditorGUILayout.TextField(UINamespace);
+            if (EditorGUI.EndChangeCheck())
+            {
+                EditorPrefs.SetString(Application.productName + "_UIItemAutobindNamespace", UINamespace);
             }
 
             EditorGUILayout.EndHorizontal();

@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using GameMain;
-using TMPro;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
@@ -106,7 +104,7 @@ namespace Autobind.Editor
             { "m_img", "Image" },
             { "m_rawimg", "RawImage" },
             { "m_txt", "Text" },
-            {"m_tmp_","TextMeshProUGUI"},
+            { "m_tmp_", "TextMeshProUGUI" },
 
             { "m_input", "InputField" },
             { "m_selfinput", "SelfInputField" },
@@ -122,7 +120,6 @@ namespace Autobind.Editor
 
         private void OnEnable()
         {
-            
             m_BindDatas = serializedObject.FindProperty("BindDatas");
             m_BindComs = serializedObject.FindProperty("m_BindComs");
             expandRules = EditorPrefs.GetBool("COM_AUTO_BIND_TOOL_EXPAND", true);
@@ -186,7 +183,7 @@ namespace Autobind.Editor
 
             if (GUILayout.Button("路径设置"))
             {
-                UIFormCodeGenerator.OpenCodeGeneratorWindow();
+                AutobindToolConfigWindow.OpenCodeGeneratorWindow();
             }
 
             // if (GUILayout.Button("自动绑定元组件"))
@@ -355,7 +352,7 @@ namespace Autobind.Editor
             UIFormCodePath = string.IsNullOrEmpty(UIFormCodePath) ? UIFormBaseCodePath : UIFormCodePath;
             UIItemCodePath = string.IsNullOrEmpty(UIItemCodePath) ? UIItemBaseCodePath : UIItemCodePath;
             UINamespace = string.IsNullOrEmpty(UINamespace) ? DefaultNameSpace : UINamespace;
-            
+
             var tool = (ComponentAutoBindTool)target;
             GameObject gameobject = tool.gameObject;
             List<ComponentAutoBindTool.BindData> datas = new List<ComponentAutoBindTool.BindData>();
@@ -546,50 +543,50 @@ namespace Autobind.Editor
             string itemPath, string _nameSpace)
         {
             if (go == null) return;
-            UIFormCodeGenerator.GenCodeType type = UIFormCodeGenerator.GenCodeType.UIForm;
+            AutobindToolConfigWindow.GenCodeType type = AutobindToolConfigWindow.GenCodeType.UIForm;
             if (go.name.EndsWith("Form"))
             {
-                type = UIFormCodeGenerator.GenCodeType.UIForm;
+                type = AutobindToolConfigWindow.GenCodeType.UIForm;
             }
             else if (go.name.EndsWith("Item"))
             {
-                type = UIFormCodeGenerator.GenCodeType.UIItem;
+                type = AutobindToolConfigWindow.GenCodeType.UIItem;
             }
 
             string codepath = string.Empty;
-            if (type == UIFormCodeGenerator.GenCodeType.UIForm)
+            if (type == AutobindToolConfigWindow.GenCodeType.UIForm)
             {
                 string clsName = go.name;
-                UGuiForm ui = go.GetComponent<UGuiForm>();
-                if (ui != null)
+                // UGuiForm ui = go.GetComponent<UGuiForm>();
+                // if (ui != null)
                 {
                     codepath = formPath;
                     string nameSpace = _nameSpace;
                     GenAutoBindCode(go, bindDatas, type, codepath, clsName, nameSpace);
                 }
-                else
-                {
-                    EditorUtility.DisplayDialog("错误", "未找到挂载的UGuiForm组件", "OK");
-                    return;
-                }
+                // else
+                // {
+                //     EditorUtility.DisplayDialog("错误", "未找到挂载的UGuiForm组件", "OK");
+                //     return;
+                // }
 
 
                 AssetDatabase.Refresh();
             }
-            else if (type == UIFormCodeGenerator.GenCodeType.UIItem)
+            else if (type == AutobindToolConfigWindow.GenCodeType.UIItem)
             {
                 codepath = itemPath;
                 string clsName = go.name;
-                UGuiItem ui = go.GetComponent<UGuiItem>();
-                if (ui != null)
+                // UGuiItem ui = go.GetComponent<UGuiItem>();
+                // if (ui != null)
                 {
                     string nameSpace = _nameSpace;
                     GenAutoItemBindCode(go, bindDatas, type, codepath, clsName, nameSpace);
                 }
-                else
-                {
-                    Debug.LogError("未找到对应UGuiItem脚本!!!!");
-                }
+                // else
+                // {
+                //     Debug.LogError("未找到对应UGuiItem脚本!!!!");
+                // }
 
                 AssetDatabase.Refresh();
             }
@@ -597,7 +594,7 @@ namespace Autobind.Editor
 
 
         private static void GenAutoBindCode(GameObject go, List<ComponentAutoBindTool.BindData> bindDatas,
-            UIFormCodeGenerator.GenCodeType type, string codePath,
+            AutobindToolConfigWindow.GenCodeType type, string codePath,
             string clsName, string nameSpace, string nameEx = "")
         {
             ComponentAutoBindTool bindTool = go.GetComponent<ComponentAutoBindTool>();
@@ -698,7 +695,7 @@ namespace Autobind.Editor
         }
 
         private static void GenAutoItemBindCode(GameObject go, List<ComponentAutoBindTool.BindData> bindDatas,
-            UIFormCodeGenerator.GenCodeType type,
+            AutobindToolConfigWindow.GenCodeType type,
             string codePath, string clsName, string nameSpace, string nameEx = "")
         {
             ComponentAutoBindTool bindTool = go.GetComponent<ComponentAutoBindTool>();

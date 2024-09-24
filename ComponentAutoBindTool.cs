@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using GameFramework;
 using UnityEngine;
 
 namespace Autobind
@@ -43,7 +42,7 @@ namespace Autobind
         {
             if (index >= m_BindComs.Count)
             {
-                throw new GameFrameworkException("索引无效");
+                throw new Exception("索引无效");
                 //Debug.LogError("索引无效");
             }
 
@@ -51,7 +50,7 @@ namespace Autobind
 
             if (bindCom == null)
             {
-                throw new GameFrameworkException("类型无效");
+                throw new Exception("类型无效");
                 //Debug.LogError("类型无效");
             }
 
