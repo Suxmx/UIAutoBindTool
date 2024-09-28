@@ -6,7 +6,6 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityGameFramework.Runtime;
 using BindData = Autobind.ComponentAutoBindTool.BindData;
 
 namespace Autobind.Editor
